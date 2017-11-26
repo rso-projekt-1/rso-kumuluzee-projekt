@@ -32,8 +32,10 @@
         <dependency>
             <groupId>com.kumuluz.ee.rest</groupId>
             <artifactId>kumuluzee-rest-core</artifactId>
-            <version>1.1.0</version>
         </dependency>
+
+
+
         <!-- <dependency>
             <groupId>rso.project</groupId>
             <artifactId>business-logic</artifactId>

@@ -2,6 +2,7 @@ package rso.project;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name = "customer")
@@ -10,7 +11,7 @@ import java.util.Date;
                 @NamedQuery(name = "Customer.getAll", query = "SELECT c FROM customer c")
         })
 @UuidGenerator(name =  "idGenerator")
-public class Customer {
+public class Customer{
 
     @Id
     @GeneratedValue(generator = "idGenerator")

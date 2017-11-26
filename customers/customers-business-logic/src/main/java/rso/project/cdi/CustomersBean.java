@@ -8,10 +8,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+
 
 @RequestScoped
 public class CustomersBean {
@@ -54,6 +56,8 @@ public class CustomersBean {
         }
         return customer;
     }
+
+    //@Transactional(Transactional.TxType.REQUIRED)
     public boolean deleteCustomer(String customer_id){
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) return false;
