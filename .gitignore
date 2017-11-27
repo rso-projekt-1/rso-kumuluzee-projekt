@@ -1,0 +1,7 @@
+./customers/customers-api/target/
+./customers/customers-business-logic/target/
+./customers/customers-persistence/target/
+./orders/orders-api/target/
+./orders/orders-business-logic/target/
+./orders/orders-persistence/target/
+**/*.iml

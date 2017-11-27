@@ -27,7 +27,7 @@ public class CustomersResource {
     protected UriInfo uriInfo;
 
     @GET
-    public Response getCusomers(){
+    public Response getCustomers(){
         List<Customer> customerList = customersBean.getCustomers();
         return Response.ok(customerList).build();
     }
