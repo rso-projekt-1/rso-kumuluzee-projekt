@@ -1,7 +1,9 @@
 language: java
 jdk: oraclejdk8
 install: true
-script: mvn clean package
-
+script:
+  - mvn clean package
+  -docker build -t customers-api-rso-projekt:customers-api-rso ./customers/
 after_success:
-  - docker ps | echo "test"
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push customers-api-rso-projekt:customers-api-rso
