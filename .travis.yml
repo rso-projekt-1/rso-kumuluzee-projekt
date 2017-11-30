@@ -6,4 +6,4 @@ script:
   - docker build -t rso-projekt:customers-api-rso ./customers/
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push rso-projekt:customers-api-rso
+  - docker push $DOCKER_USERNAME/rso-projekt:customers-api-rso
