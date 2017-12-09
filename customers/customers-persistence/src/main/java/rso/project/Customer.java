@@ -1,4 +1,5 @@
 package rso.project;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
@@ -27,6 +28,8 @@ public class Customer{
 
     @Column(name = "date_of_birth")
     private Date date_of_birth;
+    //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX", timezone="CET")
+
 
     //getters,setters
 

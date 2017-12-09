@@ -38,6 +38,7 @@ public class CustomersBean {
             commitTx();
         }catch (Exception e){
             rollbackTx();
+            return null;
         }
         return customer;
     }

@@ -11,6 +11,12 @@
         <module>customers</module>
         <module>orders</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

@@ -54,6 +54,18 @@ public class CustomersResource {
         }
     }
 
+    @POST
+    public Response createCustomer(Customer customer){
+        customer = customersBean.createCustomer(customer);
+        if(customer == null) return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+
+        if(customer.getId() != null){
+            return Response.status(Response.Status.OK).entity(customer).build();
+        }else{
+            return Response.status(Response.Status.NOT_MODIFIED).build();
+        }
+    }
+
     @DELETE
     @Path("{Customer_id}")
     public Response deleteCustomer(@PathParam("Customer_id") String customer_id){
