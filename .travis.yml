@@ -4,6 +4,10 @@ install: true
 script:
   - mvn clean package
   - docker build -t $DOCKER_USERNAME/rso-projekt:customers-api-rso ./customers/
+  - docker build -t $DOCKER_USERNAME/rso-projekt:orders-api-rso ./orders/
+
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push $DOCKER_USERNAME/rso-projekt:customers-api-rso
+  - docker push $DOCKER_USERNAME/rso-projekt:orders-api-rso
+

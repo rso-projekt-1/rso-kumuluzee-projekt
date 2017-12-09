@@ -1,0 +1,58 @@
+version: "3"
+services:
+  etcd:
+    image: quay.io/coreos/etcd:latest
+    restart: always
+    ports:
+      - "2379:2379"
+    volumes:
+      - /tmp/etcd-data:/etcd-data
+    environment:
+      - ETCD_NAME=my-etcd
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_CLUSTER=my-etcd=http://0.0.0.0:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_INITIAL_CLUSTER_TOKEN=my-etcd-token
+      - ETCD_AUTO_COMPACTION_RETENTION=1
+      - ETCD_CORS=*
+
+  postgres-customer:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=customer
+    ports:
+      - "5432:5432"
+
+  postgres-order:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=order
+    ports:
+      - "5433:5432"
+
+  customer-service:
+    #image: vitjanz/rso-projekt:customers-api-rso
+    image: customers-api-test
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-customer:5432/customer
+      - KUMULUZEE_CONFIG_ETCD_HOST=http://etcd:2379
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-customer
+
+  order-service:
+      #image: vitjanz/rso-projekt:orders-api-rso
+      image: orders-api-test
+      environment:
+        - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-order:5432/order
+        - KUMULUZEE_CONFIG_ETCD_HOST=http://etcd:2379
+      ports:
+        - "8081:8081"
+      depends_on:
+        - postgres-order
