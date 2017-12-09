@@ -1,5 +1,7 @@
 package rso.project.customers.api.resources;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import com.sun.org.apache.regexp.internal.RE;
 
 import rso.project.Customer;
@@ -7,6 +9,7 @@ import rso.project.cdi.CustomersBean;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.management.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -79,9 +82,12 @@ public class CustomersResource {
     @GET
     @Path("/filtered")
     public Response getCustomersFiltered(){
-        List<Customer> customers;
-        //customer = customersBean.getCustomer
-        return Response.status(Response.Status.NOT_FOUND).build();
+        List<Customer> customers = customersBean.getCustomersFilter(uriInfo);
+        if(customers == null || customers.size() == 0) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }else{
+            return Response.status(Response.Status.OK).entity(customers).build();
+        }
     }
 
 }

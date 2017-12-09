@@ -5,6 +5,7 @@ import org.eclipse.persistence.annotations.UuidGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "customer")
 @NamedQueries(value =
@@ -30,6 +31,8 @@ public class Customer{
     private Date date_of_birth;
     //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX", timezone="CET")
 
+    @Transient
+    private List<Order> orders;
 
     //getters,setters
 
@@ -70,5 +73,13 @@ public class Customer{
 
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
