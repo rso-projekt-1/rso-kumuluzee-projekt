@@ -9,6 +9,7 @@ services:
       - /tmp/etcd-data:/etcd-data
     environment:
       - ETCD_NAME=my-etcd
+      - ETCD_DATA_DIR=/etcd-data
       - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
       - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
       - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
@@ -41,6 +42,7 @@ services:
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-customer:5432/customer
       - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
     ports:
       - "8080:8080"
     depends_on:
@@ -52,6 +54,7 @@ services:
       environment:
         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-order:5432/order
         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+        - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
       ports:
         - "8081:8081"
       depends_on:

@@ -18,6 +18,7 @@ public class OrdersBean {
     private EntityManager em;
 
     public List<Order> getOrders(UriInfo uriInfo){
+        System.out.println(uriInfo.getRequestUri().toString());
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0).build();
         return JPAUtils.queryEntities(em, Order.class, queryParameters);
     }

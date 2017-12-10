@@ -1,6 +1,7 @@
 package rso.project.cdi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import org.apache.http.HttpEntity;
@@ -28,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequestScoped
@@ -39,7 +41,9 @@ public class CustomersBean {
 
     private HttpClient httpClient;
 
-    private String basePath;
+    @Inject
+    @DiscoverService(value="order-service",environment = "dev", version = "*")
+    private Optional<String> basePath;
 
     @Inject
     private RestProperties restProperties;
@@ -47,12 +51,14 @@ public class CustomersBean {
     @Inject
     private CustomersBean customersBean;
 
+
+
     @PostConstruct
     private void init() {
         httpClient = HttpClientBuilder.create().build();
         objectMapper = new ObjectMapper();
 
-        basePath = "http://localhost:8081/v1/";
+        //basePath = "http://localhost:8081/v1/";
     }
 
     public Customer getCustomer(String customer_id){
@@ -67,10 +73,15 @@ public class CustomersBean {
 
     public List<Order> getOrders(String customer_id){
         try {
-            HttpGet request = new HttpGet(basePath+"orders?where=customerId:EQ:"+customer_id);
+            String request_uri = basePath.get()+"/v1/orders?where=customerId:EQ:"+customer_id;
+            request_uri = basePath.get()+"/v1/orders/";
+
+            System.out.println(request_uri);
+            HttpGet request = new HttpGet(request_uri);
             HttpResponse response = httpClient.execute(request);
 
             int status = response.getStatusLine().getStatusCode();
+            System.out.println("Status "+status);
             if(status >= 200 && status < 300){
                 HttpEntity entity = response.getEntity();
 
@@ -80,6 +91,7 @@ public class CustomersBean {
             e.printStackTrace();
         } catch (IOException e) {
             String msg = e.getClass().getName()+ " occured: "+e.getMessage();
+            System.out.println(msg);
             throw new InternalServerErrorException(msg);
         }
         return new ArrayList<>();
