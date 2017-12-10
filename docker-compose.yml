@@ -40,7 +40,7 @@ services:
     image: customers-api-test
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-customer:5432/customer
-      - KUMULUZEE_CONFIG_ETCD_HOST=http://etcd:2379
+      - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
     ports:
       - "8080:8080"
     depends_on:
@@ -51,7 +51,7 @@ services:
       image: orders-api-test
       environment:
         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-order:5432/order
-        - KUMULUZEE_CONFIG_ETCD_HOST=http://etcd:2379
+        - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
       ports:
         - "8081:8081"
       depends_on:

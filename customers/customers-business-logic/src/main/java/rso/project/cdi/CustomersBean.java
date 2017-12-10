@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import rso.project.Customer;
 import rso.project.Order;
+import rso.project.cdi.configuration.RestProperties;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -41,6 +42,9 @@ public class CustomersBean {
     private String basePath;
 
     @Inject
+    private RestProperties restProperties;
+
+    @Inject
     private CustomersBean customersBean;
 
     @PostConstruct
@@ -54,8 +58,10 @@ public class CustomersBean {
     public Customer getCustomer(String customer_id){
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) throw new NotFoundException();
-        List<Order> orders = customersBean.getOrders(customer_id);
-        customer.setOrders(orders);
+        if(restProperties.isOrderServiceEnabled()) {
+            List<Order> orders = customersBean.getOrders(customer_id);
+            customer.setOrders(orders);
+        }
         return customer;
     }
 
