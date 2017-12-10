@@ -55,6 +55,7 @@ services:
         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-order:5432/order
         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
         - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+        - KUMULUZEE_SERVER_BASE-URL=http://order-service:8081
       ports:
         - "8081:8081"
       depends_on:

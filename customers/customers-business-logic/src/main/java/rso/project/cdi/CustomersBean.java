@@ -72,9 +72,10 @@ public class CustomersBean {
     }
 
     public List<Order> getOrders(String customer_id){
+        if(basePath.isPresent()){
         try {
             String request_uri = basePath.get()+"/v1/orders?where=customerId:EQ:"+customer_id;
-            request_uri = basePath.get()+"/v1/orders/";
+            //request_uri = basePath.get()+"/v1/orders/";
 
             System.out.println(request_uri);
             HttpGet request = new HttpGet(request_uri);
@@ -89,10 +90,14 @@ public class CustomersBean {
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
+            System.out.println("Error: "+basePath.get());
         } catch (IOException e) {
             String msg = e.getClass().getName()+ " occured: "+e.getMessage();
             System.out.println(msg);
             throw new InternalServerErrorException(msg);
+        }
+        }else{
+            System.out.println("Order-service not discovered.");
         }
         return new ArrayList<>();
     }
