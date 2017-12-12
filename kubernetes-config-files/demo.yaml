@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: demo-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: vitjanz/rso-projekt:demo-rso
+        name: kubernetes-demo
+        ports:
+        - containerPort: 8082
+          name: server
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    app: demo
