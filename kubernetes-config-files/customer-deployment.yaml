@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: customer-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+      - image: vitjanz/rso-projekt:customers-api-rso
+        name: kubernetes-customer
+        env:
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-customer:5432/customer
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.246:30052
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-customer:5432/customer
+        ports:
+        - containerPort: 8080
+          name: server
+          protocol: TCP
