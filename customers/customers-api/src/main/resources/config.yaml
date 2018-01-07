@@ -14,8 +14,8 @@ kumuluzee:
       password: postgres
       max-pool-size: 20
   config:
-      etcd:
-        hosts: http://localhost:2379
+    etcd:
+      hosts: http://localhost:2379
   discovery:
     etcd:
       hosts: http://localhost:2379
@@ -27,3 +27,7 @@ kumuluzee:
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
+        username: postgres
+        password: postgres
+      http-health-check:
+        connection-url: http://www.reddit.com
