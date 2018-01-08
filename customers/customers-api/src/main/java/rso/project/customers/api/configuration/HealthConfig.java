@@ -1,4 +1,4 @@
-package rso.project.cdi.configuration;
+package rso.project.customers.api.configuration;
 
 import com.kumuluz.ee.configuration.cdi.ConfigBundle;
 import com.kumuluz.ee.configuration.cdi.ConfigValue;
@@ -6,24 +6,16 @@ import com.kumuluz.ee.configuration.cdi.ConfigValue;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-@ConfigBundle("rest-properties")
-public class RestProperties {
+@ConfigBundle("health-properties")
+public class HealthConfig {
 
-    @ConfigValue(value = "external-dependencies.order-service.enabled",watch = true)
-    private boolean orderServiceEnabled;
 
-    @ConfigValue(value = "external-dependencies.order-service.fakeHealthy",watch = true)
-    private boolean orderServiceFakeHealthy;
+    @ConfigValue(value = "external-dependencies.customer-service.customerServiceFakeHealthy",watch = true)
+    private boolean customerServiceFakeHealthy;
 
-    public boolean isOrderServiceFakeHealthy(){ return orderServiceFakeHealthy; }
-    public void setOrderServiceFakeHealthy(boolean orderServiceFakeHealthy){
-        this.orderServiceFakeHealthy = orderServiceFakeHealthy;
+    public boolean isCustomerServiceFakeHealthy(){ return customerServiceFakeHealthy; }
+    public void setCustomerServiceFakeHealthy(boolean orderServiceFakeHealthy){
+        this.customerServiceFakeHealthy = orderServiceFakeHealthy;
     }
 
-    public boolean isOrderServiceEnabled(){
-        return orderServiceEnabled;
-    }
-    public void setOrderServiceEnabled(boolean orderServiceEnabled){
-        this.orderServiceEnabled = orderServiceEnabled;
-    }
 }

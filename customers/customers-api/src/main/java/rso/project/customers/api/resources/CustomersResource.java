@@ -48,8 +48,8 @@ public class CustomersResource {
         return Response.status(Response.Status.OK).entity(customer).build();
     }
 
-    @POST
-    @Path("/healthy")
+    @GET
+    @Path("healthy")
     public Response setHealthy(){
         boolean healthy = restProperties.isOrderServiceFakeHealthy();
         restProperties.setOrderServiceFakeHealthy(!healthy);
