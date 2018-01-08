@@ -16,6 +16,13 @@ kumuluzee:
   config:
       etcd:
         hosts: http://192.168.99.100:2379
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/OrderDS
   discovery:
       etcd:
         hosts: http://localhost:2379

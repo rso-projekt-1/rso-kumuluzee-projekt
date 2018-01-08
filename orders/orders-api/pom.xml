@@ -40,6 +40,10 @@
             <version>${kumuluzee-discovery.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.kumuluz.ee.health</groupId>
+            <artifactId>kumuluzee-health</artifactId>
+        </dependency>
         <!-- <dependency>
             <groupId>rso.project</groupId>
             <artifactId>business-logic</artifactId>
