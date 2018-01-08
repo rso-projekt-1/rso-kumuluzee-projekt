@@ -6,6 +6,7 @@ import com.sun.org.apache.regexp.internal.RE;
 
 import rso.project.Customer;
 import rso.project.cdi.CustomersBean;
+import rso.project.cdi.configuration.RestProperties;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -22,6 +23,9 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("customers")
 public class CustomersResource {
+
+    @Inject
+    private RestProperties restProperties;
 
     @Inject
     private CustomersBean customersBean;
@@ -42,6 +46,14 @@ public class CustomersResource {
         if(customer == null) return Response.status(Response.Status.NOT_FOUND).build();
 
         return Response.status(Response.Status.OK).entity(customer).build();
+    }
+
+    @POST
+    @Path("/healthy")
+    public Response setHealthy(){
+        boolean healthy = restProperties.isOrderServiceFakeHealthy();
+        restProperties.setOrderServiceFakeHealthy(!healthy);
+        return Response.ok(!healthy).build();
     }
 
     @PUT
