@@ -24,3 +24,5 @@ kubectl create -f .\kubernetes-config-files\order-deployment.yaml
 kubectl create -f .\kubernetes-config-files\customer-deployment.yaml
 
 
+kubectl get svc
+kubectl get deployment

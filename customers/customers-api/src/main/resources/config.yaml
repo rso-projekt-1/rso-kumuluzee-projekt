@@ -23,5 +23,5 @@ kumuluzee:
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
-  rest-properties:
-    orderServiceFakeHealthy: true
+rest-properties:
+  orderServiceFakeHealthy: true
