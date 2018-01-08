@@ -19,15 +19,9 @@ kumuluzee:
   discovery:
     etcd:
       hosts: http://localhost:2379
-
   health:
-    servlet:
-      mapping: /health
-      enabled: true
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
-        username: postgres
-        password: postgres
-      http-health-check:
-        connection-url: http://www.reddit.com
+  rest-properties:
+    orderServiceFakeHealthy: true
