@@ -7,6 +7,7 @@ import com.sun.org.apache.regexp.internal.RE;
 import rso.project.Customer;
 import rso.project.cdi.CustomersBean;
 import rso.project.cdi.configuration.RestProperties;
+import rso.project.customers.api.configuration.HealthConfig;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ import java.util.List;
 public class CustomersResource {
 
     @Inject
-    private RestProperties restProperties;
+    private HealthConfig healthConfig;
 
     @Inject
     private CustomersBean customersBean;
@@ -49,11 +50,11 @@ public class CustomersResource {
     }
 
     @GET
-    @Path("healthy")
-    public Response setHealthy(){
-        boolean healthy = restProperties.isOrderServiceFakeHealthy();
-        restProperties.setOrderServiceFakeHealthy(!healthy);
-        return Response.ok(!healthy).build();
+    @Path("/healthy")
+    public Response getHealthy(){
+        boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
+        //healthConfig.setCustomerServiceFakeHealthy(!healthy);
+        return Response.ok(healthy).build();
     }
 
     @PUT
