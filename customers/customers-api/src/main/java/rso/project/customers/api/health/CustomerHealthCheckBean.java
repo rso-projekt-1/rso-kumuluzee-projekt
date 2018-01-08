@@ -15,17 +15,17 @@ public class CustomerHealthCheckBean implements HealthCheck{
     private RestProperties restProperties;
 
     @Override
-    public HealthCheckResponse call(){
-        try{
-            if(restProperties.isOrderServiceFakeHealthy()){
+    public HealthCheckResponse call() {
+        try {
+            if (restProperties.isOrderServiceFakeHealthy()) {
                 System.out.println("Up");
                 return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
 
-            }else{
+            } else {
                 System.out.println("Down");
                 return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Whoops.");
         }
         return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
