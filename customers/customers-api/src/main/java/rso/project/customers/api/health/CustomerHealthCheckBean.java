@@ -13,12 +13,12 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class CustomerHealthCheckBean implements HealthCheck{
 
-    //@Inject
-    //private HealthConfig healthConfig;
+    @Inject
+    private HealthConfig healthConfig;
 
     @Override
     public HealthCheckResponse call() {
-        /*try {
+        try {
             if (healthConfig.isCustomerServiceFakeHealthy()) {
                 System.out.println("Up");
                 return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
@@ -29,7 +29,7 @@ public class CustomerHealthCheckBean implements HealthCheck{
             }
         } catch (Exception e) {
             System.out.println("Whoops.");
-        }*/
+        }
         return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
     }
 }

@@ -22,7 +22,7 @@ kumuluzee:
       enabled: true
     checks:
       data-source-health-check:
-        jndi-name: jdbc/OrderDS
+        jndi-name: jdbc/OrdersDS
   discovery:
       etcd:
         hosts: http://localhost:2379

@@ -11,6 +11,7 @@ spec:
     spec:
       containers:
       - image: vitjanz/rso-projekt:orders-api-rso
+        imagePullPolicy: Always
         name: kubernetes-order
         env:
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
