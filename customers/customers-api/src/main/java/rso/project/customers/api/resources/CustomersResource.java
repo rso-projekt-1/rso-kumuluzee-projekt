@@ -60,7 +60,7 @@ public class CustomersResource {
     }
     @POST
     @Path("/healthy")
-    public Response setHealthy(boolean healthy){
+    public Response setHealthy(Boolean healthy){
         System.out.println("Post healthy");
         //boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
         healthConfig.setCustomerServiceFakeHealthy(healthy);
