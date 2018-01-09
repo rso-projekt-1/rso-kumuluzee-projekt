@@ -36,6 +36,7 @@ public class CustomersResource {
 
     @GET
     public Response getCustomers(){
+        System.out.println("Getting Customers.i");
         List<Customer> customerList = customersBean.getCustomers();
         return Response.ok(customerList).build();
     }
@@ -50,12 +51,20 @@ public class CustomersResource {
     }
 
     @GET
-    @Path("healthy")
+    @Path("/healthy")
     public Response getHealthy(){
+        System.out.println("Get healthy");
         boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
         //healthConfig.setCustomerServiceFakeHealthy(!healthy);
         return Response.status(Response.Status.OK).entity(healthy).build();
-
+    }
+    @POST
+    @Path("/healthy")
+    public Response setHealthy(boolean healthy){
+        System.out.println("Post healthy");
+        //boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
+        healthConfig.setCustomerServiceFakeHealthy(healthy);
+        return Response.status(Response.Status.OK).entity(healthy).build();
     }
 
     @PUT

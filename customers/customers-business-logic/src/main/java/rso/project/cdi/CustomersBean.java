@@ -108,6 +108,7 @@ public class CustomersBean {
     }
 
     public List<Customer> getCustomers(){
+        System.out.println("Getting Customers.-bean");
         Query query = em.createNamedQuery("Customer.getAll", Customer.class);
         return query.getResultList();
     }
