@@ -5,6 +5,7 @@ import com.kumuluz.ee.rest.utils.JPAUtils;
 import com.sun.org.apache.regexp.internal.RE;
 
 import org.eclipse.microprofile.metrics.Counter;
+import org.eclipse.microprofile.metrics.Meter;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Metric;
 import rso.project.Customer;
@@ -42,18 +43,33 @@ public class CustomersResource {
     private Counter customerRequestCounter;
     */
 
+    @Inject
+    @Metric(name = "customer_request_meter")
+    private Meter customer_request_meter;
+
     //count created users with createCustomer
     @Inject
     @Metric(name = "customer_counter")
     private Counter customerCounter;
 
+    @GET
+    @Path("/customerCount")
+    public Response getCustomerCount(){
+        return Response.ok(customerCounter).build();
+    }
+
+    @GET
+    @Path("/customerRequestMeter")
+    public Response getCustomerRequestsMeter(){
+        return Response.ok(customer_request_meter).build();
+    }
+
 
 
     @GET
-    @Metered(name = "customer_requests")
     public Response getCustomers(){
         System.out.println("Getting Customers.i");
-
+        customer_request_meter.mark();
         List<Customer> customerList = customersBean.getCustomers();
         return Response.ok(customerList).build();
     }
