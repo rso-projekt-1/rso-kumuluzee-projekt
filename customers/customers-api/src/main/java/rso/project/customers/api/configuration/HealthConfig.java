@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 public class HealthConfig {
 
 
-    @ConfigValue(watch = true)
+    //@ConfigValue(watch = true)
     private boolean customerServiceFakeHealthy;
 
     public boolean isCustomerServiceFakeHealthy(){ return customerServiceFakeHealthy; }
