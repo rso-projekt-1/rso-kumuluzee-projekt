@@ -5,12 +5,12 @@ import com.kumuluz.ee.configuration.cdi.ConfigValue;
 
 import javax.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
 @ConfigBundle("health-properties")
+@ApplicationScoped
 public class HealthConfig {
 
 
-    @ConfigValue(value = "external-dependencies.customer-service.customerServiceFakeHealthy",watch = true)
+    @ConfigValue(watch = true)
     private boolean customerServiceFakeHealthy;
 
     public boolean isCustomerServiceFakeHealthy(){ return customerServiceFakeHealthy; }

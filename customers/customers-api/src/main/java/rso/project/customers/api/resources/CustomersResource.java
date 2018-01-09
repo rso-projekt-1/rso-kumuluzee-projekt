@@ -50,11 +50,12 @@ public class CustomersResource {
     }
 
     @GET
-    @Path("/healthy")
+    @Path("healthy")
     public Response getHealthy(){
         boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
         //healthConfig.setCustomerServiceFakeHealthy(!healthy);
-        return Response.ok(healthy).build();
+        return Response.status(Response.Status.OK).entity(healthy).build();
+
     }
 
     @PUT

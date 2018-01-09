@@ -38,8 +38,10 @@
             <artifactId>cdi-api</artifactId>
         </dependency>
 
-
-
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

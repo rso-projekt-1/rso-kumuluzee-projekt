@@ -4,6 +4,7 @@ import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
 import rso.project.cdi.configuration.RestProperties;
+import rso.project.customers.api.configuration.HealthConfig;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,13 +12,14 @@ import javax.inject.Inject;
 @Health
 @ApplicationScoped
 public class CustomerHealthCheckBean implements HealthCheck{
-    @Inject
-    private RestProperties restProperties;
+
+    //@Inject
+    //private HealthConfig healthConfig;
 
     @Override
     public HealthCheckResponse call() {
-        try {
-            if (restProperties.isOrderServiceFakeHealthy()) {
+        /*try {
+            if (healthConfig.isCustomerServiceFakeHealthy()) {
                 System.out.println("Up");
                 return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
 
@@ -27,7 +29,7 @@ public class CustomerHealthCheckBean implements HealthCheck{
             }
         } catch (Exception e) {
             System.out.println("Whoops.");
-        }
+        }*/
         return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
     }
 }
