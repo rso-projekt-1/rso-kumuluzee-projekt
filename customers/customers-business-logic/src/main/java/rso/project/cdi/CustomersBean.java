@@ -66,8 +66,8 @@ public class CustomersBean {
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) throw new NotFoundException();
         //if(restProperties.isOrderServiceEnabled()) {
-            List<Order> orders = customersBean.getOrders(customer_id);
-            customer.setOrders(orders);
+        List<Order> orders = customersBean.getOrders(customer_id);
+        customer.setOrders(orders);
         //}
         return customer;
     }
