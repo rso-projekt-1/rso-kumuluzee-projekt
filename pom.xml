@@ -33,6 +33,8 @@
         <kumuluzee-discovery.version>1.1.0-SNAPSHOT</kumuluzee-discovery.version>
         <kumuluzee-health.version>1.0.0-SNAPSHOT</kumuluzee-health.version>
         <kumuluzee-metrics.version>1.0.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-logs.version>1.3.0-SNAPSHOT</kumuluzee-logs.version>
+
     </properties>
 
     <repositories>

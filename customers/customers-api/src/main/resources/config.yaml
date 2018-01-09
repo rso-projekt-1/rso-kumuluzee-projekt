@@ -33,5 +33,25 @@ kumuluzee:
         url-pattern: /metrics/*
       - name: customersEndpoint
         url-pattern: /v1/customers/*
+  logs:
+    config-file: '<?xml version="1.0" encoding="UTF-8"?>
+                  <Configuration name="users">
+                      <Appenders>
+                          <Console name="console" target="SYSTEM_OUT">
+                              <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                          </Console>
+                          <Socket name="logstash" host="45accb08-87ef-4735-9cb4-2eb70f46f38e-ls.logit.io" port="14826"
+                                                                                         protocol="tcp">
+                              <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
+                          </Socket>
+                      </Appenders>
+                      <Loggers>
+                          <!-- Default logger -->
+                          <Root level="all">
+                              <AppenderRef ref="console" level="info"/>
+                              <AppenderRef ref="logstash" level="trace"/>
+                          </Root>
+                      </Loggers>
+                  </Configuration>'
 health-properties:
   customer-service-fake-healthy: true

@@ -67,6 +67,12 @@
             <artifactId>kumuluzee-metrics-logs</artifactId>
             <version>${kumuluzee-metrics.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.logs</groupId>
+            <artifactId>kumuluzee-logs-log4j2</artifactId>
+            <version>${kumuluzee-logs.version}</version>
+        </dependency>
         <!-- <dependency>
             <groupId>rso.project</groupId>
             <artifactId>business-logic</artifactId>
