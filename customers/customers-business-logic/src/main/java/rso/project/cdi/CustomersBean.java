@@ -62,12 +62,13 @@ public class CustomersBean {
     }
 
     public Customer getCustomer(String customer_id){
+        System.out.println("Get customer-bean");
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) throw new NotFoundException();
-        if(restProperties.isOrderServiceEnabled()) {
+        //if(restProperties.isOrderServiceEnabled()) {
             List<Order> orders = customersBean.getOrders(customer_id);
             customer.setOrders(orders);
-        }
+        //}
         return customer;
     }
 
