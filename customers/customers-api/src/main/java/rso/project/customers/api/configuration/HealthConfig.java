@@ -9,9 +9,9 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class HealthConfig {
 
-
-    //@ConfigValue(watch = true)
-    @ConfigValue(value = "external-dependencies.customer-service.customerServiceFakeHealthy",watch = true)
+    //etcd path environments/dev/services/customer-service/1.0.0/config/health-properties/customer-service-fake-healthy
+    //@ConfigValue(value = "external-dependencies.customer-service.customerServiceFakeHealthy",watch = true)
+    @ConfigValue(watch = true)
     private boolean customerServiceFakeHealthy;
 
 

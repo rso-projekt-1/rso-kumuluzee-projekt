@@ -27,5 +27,11 @@ kumuluzee:
     checks:
       data-source-health-check:
         jndi-name: jdbc/CustomersDS
+  metrics:
+    web-instrumentation:
+      - name: metricsEndpoint
+        url-pattern: /metrics/*
+      - name: customersEndpoint
+        url-pattern: /v1/customers/*
 health-properties:
-  customerServiceFakeHealthy: true
+  customer-service-fake-healthy: true

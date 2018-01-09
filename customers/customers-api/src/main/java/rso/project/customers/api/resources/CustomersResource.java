@@ -4,6 +4,9 @@ import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import com.sun.org.apache.regexp.internal.RE;
 
+import org.eclipse.microprofile.metrics.Counter;
+import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Metric;
 import rso.project.Customer;
 import rso.project.cdi.CustomersBean;
 import rso.project.cdi.configuration.RestProperties;
@@ -34,9 +37,23 @@ public class CustomersResource {
     @Context
     protected UriInfo uriInfo;
 
+    /*@Inject
+    @Metric(name = "customer_request_counter")
+    private Counter customerRequestCounter;
+    */
+
+    //count created users with createCustomer
+    @Inject
+    @Metric(name = "customer_counter")
+    private Counter customerCounter;
+
+
+
     @GET
+    @Metered(name = "customer_requests")
     public Response getCustomers(){
         System.out.println("Getting Customers.i");
+
         List<Customer> customerList = customersBean.getCustomers();
         return Response.ok(customerList).build();
     }
@@ -86,6 +103,8 @@ public class CustomersResource {
         if(customer == null) return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
 
         if(customer.getId() != null){
+            //increase user count
+            customerCounter.inc();
             return Response.status(Response.Status.OK).entity(customer).build();
         }else{
             return Response.status(Response.Status.NOT_MODIFIED).build();
