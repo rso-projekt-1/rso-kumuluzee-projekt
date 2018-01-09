@@ -14,10 +14,6 @@ public class HealthConfig {
     @ConfigValue(watch = true)
     private boolean customerServiceFakeHealthy;
 
-    private boolean fakeHealthy;
-
-    public boolean isFakeHealty(){return fakeHealthy;}
-    public void setFakeHealty(boolean fakeHealthy){this.fakeHealthy = fakeHealthy;}
 
     public boolean isCustomerServiceFakeHealthy(){ return customerServiceFakeHealthy; }
     public void setCustomerServiceFakeHealthy(boolean orderServiceFakeHealthy){
