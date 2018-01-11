@@ -114,7 +114,14 @@ public class CustomersBean {
 
     public List<Order> getOrdersFallback(String customer_id){
         System.out.println("Fallback Method.");
-        return new ArrayList<Order>();
+        Order tmp = new Order();
+        tmp.setId("9999");
+        tmp.setCustomerId(customer_id);
+        tmp.setTitle("Lion King");
+        tmp.setDescription("Lions");
+        ArrayList<Order> t = new ArrayList<>();
+        t.add(tmp);
+        return t;
     }
 
 
