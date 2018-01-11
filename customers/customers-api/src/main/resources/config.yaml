@@ -3,7 +3,7 @@ kumuluzee:
   env:
     name: dev
   version: 1.0.0
-  debug: true
+  #debug: true
   server:
     base-url: http://localhost:8080
     http:
