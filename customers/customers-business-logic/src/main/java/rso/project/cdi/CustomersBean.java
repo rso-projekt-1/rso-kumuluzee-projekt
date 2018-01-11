@@ -2,6 +2,8 @@ package rso.project.cdi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import org.apache.http.HttpEntity;
@@ -11,6 +13,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import rso.project.Customer;
 import rso.project.Order;
 import rso.project.cdi.configuration.RestProperties;
@@ -33,6 +38,7 @@ import java.util.Optional;
 
 
 @RequestScoped
+@GroupKey
 public class CustomersBean {
     @PersistenceContext(unitName = "customers-jpa")
     private EntityManager em;
@@ -72,6 +78,10 @@ public class CustomersBean {
         return customer;
     }
 
+    @CircuitBreaker(failureRatio = 0.4)
+    @Fallback(fallbackMethod = "getOrdersFallback")
+    @CommandKey("http-get-order")
+    @Timeout(value=500)
     public List<Order> getOrders(String customer_id){
         if(basePath.isPresent()){
         try {
@@ -103,16 +113,25 @@ public class CustomersBean {
         return new ArrayList<>();
     }
 
+    public List<Customer> getOrdersFallback(){
+        System.out.println("Fallback Method.");
+        return new ArrayList<>();
+    }
+
+
     private List<Order> getObjects(String json) throws IOException {
         return json == null ? new ArrayList<>() : objectMapper.readValue(json,
                 objectMapper.getTypeFactory().constructCollectionType(List.class, Order.class));
     }
+
 
     public List<Customer> getCustomers(){
         System.out.println("Getting Customers.-bean");
         Query query = em.createNamedQuery("Customer.getAll", Customer.class);
         return query.getResultList();
     }
+
+
 
 
 

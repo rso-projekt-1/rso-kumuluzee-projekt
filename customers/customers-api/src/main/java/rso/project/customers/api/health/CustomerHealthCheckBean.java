@@ -25,11 +25,11 @@ public class CustomerHealthCheckBean implements HealthCheck{
 
             } else {
                 System.out.println("Down");
-                return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
+                return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).down().build();
             }
         } catch (Exception e) {
             System.out.println("Whoops.");
         }
-        return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).up().build();
+        return HealthCheckResponse.named(CustomerHealthCheckBean.class.getSimpleName()).down().build();
     }
 }

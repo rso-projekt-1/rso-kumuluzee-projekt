@@ -15,6 +15,7 @@ public class HealthConfig {
     private boolean customerServiceFakeHealthy;
 
 
+
     public boolean isCustomerServiceFakeHealthy(){ return customerServiceFakeHealthy; }
     public void setCustomerServiceFakeHealthy(boolean orderServiceFakeHealthy){
         this.customerServiceFakeHealthy = orderServiceFakeHealthy;
