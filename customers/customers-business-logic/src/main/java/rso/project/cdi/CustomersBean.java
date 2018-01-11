@@ -39,7 +39,6 @@ import java.util.Optional;
 
 
 @RequestScoped
-@GroupKey
 public class CustomersBean {
     @PersistenceContext(unitName = "customers-jpa")
     private EntityManager em;
@@ -79,7 +78,7 @@ public class CustomersBean {
         return customer;
     }
 
-    @CircuitBreaker(failureRatio = 0.4)
+    @CircuitBreaker(requestVolumeThreshold = 2)
     @Fallback(fallbackMethod = "getOrdersFallback")
     @CommandKey("http-get-order")
     @Timeout(value=2, unit = ChronoUnit.SECONDS)
