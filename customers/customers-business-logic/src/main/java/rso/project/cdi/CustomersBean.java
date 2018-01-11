@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
 import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import org.apache.http.HttpEntity;
@@ -58,6 +60,8 @@ public class CustomersBean {
     @Inject
     private CustomersBean customersBean;
 
+    private Logger log = LogManager.getLogger(CustomersBean.class.getName());
+
 
 
     @PostConstruct
@@ -74,7 +78,6 @@ public class CustomersBean {
     }
 
     public Customer getCustomer(String customer_id){
-        System.out.println("Get customer-bean");
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) throw new NotFoundException();
         //if(restProperties.isOrderServiceEnabled()) {
@@ -98,7 +101,7 @@ public class CustomersBean {
             HttpResponse response = httpClient.execute(request);
 
             int status = response.getStatusLine().getStatusCode();
-            System.out.println("Status "+status);
+            log.info("Status "+status);
             if(status >= 200 && status < 300){
                 HttpEntity entity = response.getEntity();
 
@@ -106,20 +109,20 @@ public class CustomersBean {
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-            System.out.println("Error: "+basePath.get());
+            log.error("Error: "+basePath.get());
         } catch (IOException e) {
             String msg = e.getClass().getName()+ " occured: "+e.getMessage();
             System.out.println(msg);
             throw new InternalServerErrorException(msg);
         }
         }else{
-            System.out.println("Order-service not discovered.");
+            log.warn("Order-service not discovered.");
         }
         return new ArrayList<>();
     }
 
     public List<Order> getOrdersFallback(String customer_id){
-        System.out.println("Fallback Method.");
+        log.error("Fallback Method.");
         Order tmp = new Order();
         tmp.setId("9999");
         tmp.setCustomerId(customer_id);
@@ -138,7 +141,6 @@ public class CustomersBean {
 
 
     public List<Customer> getCustomers(){
-        System.out.println("Getting Customers.-bean");
         Query query = em.createNamedQuery("Customer.getAll", Customer.class);
         return query.getResultList();
     }
@@ -148,13 +150,12 @@ public class CustomersBean {
 
 
     public Customer createCustomer(Customer customer){
-        System.out.println("Creating customer");
         try{
             beginTx();
             em.persist(customer);
             commitTx();
         }catch (Exception e){
-            System.out.println("Creating customer failed.");
+            log.error("Creating customer failed.");
 
             rollbackTx();
             return null;
@@ -188,6 +189,7 @@ public class CustomersBean {
             em.remove(customer);
             commitTx();
         }catch (Exception e){
+            log.error("Deleting customer failed: "+ customer_id);
             rollbackTx();
         }
         return true;

@@ -50,7 +50,7 @@ kumuluzee:
                       <Loggers>
                           <!-- Default logger -->
                           <Root level="all">
-                              <AppenderRef ref="console" level="error"/>
+                              <AppenderRef ref="console" level="ERROR"/>
                               <AppenderRef ref="logstash" level="trace"/>
                           </Root>
                       </Loggers>

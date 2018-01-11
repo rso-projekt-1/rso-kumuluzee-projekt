@@ -1,5 +1,7 @@
 package rso.project.customers.api.resources;
 
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import com.kumuluz.ee.logs.cdi.LogParams;
 import com.kumuluz.ee.rest.beans.QueryParameters;
@@ -55,6 +57,8 @@ public class CustomersResource {
     @Metric(name = "customer_counter")
     private Counter customerCounter;
 
+    private Logger log = LogManager.getLogger(CustomersResource.class.getName());
+
     @GET
     @Path("/customerCount")
     public Response getCustomerCount(){
@@ -71,7 +75,7 @@ public class CustomersResource {
 
     @GET
     public Response getCustomers(){
-        System.out.println("Getting Customers.i");
+        log.info("Getting Customers");
         customer_request_meter.mark();
         List<Customer> customerList = customersBean.getCustomers();
         return Response.ok(customerList).build();
@@ -89,7 +93,8 @@ public class CustomersResource {
     @GET
     @Path("/healthy")
     public Response getHealthy(){
-        System.out.println("Get healthy");
+        log.info("Get health property");
+
         boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
         //healthConfig.setCustomerServiceFakeHealthy(!healthy);
         return Response.status(Response.Status.OK).entity(healthy).build();
@@ -97,7 +102,7 @@ public class CustomersResource {
     @POST
     @Path("/healthy")
     public Response setHealthy(Boolean healthy){
-        System.out.println("Post healthy");
+        log.info("Set health property/simulate bad response");
         //boolean healthy = healthConfig.isCustomerServiceFakeHealthy();
         healthConfig.setCustomerServiceFakeHealthy(healthy);
         return Response.status(Response.Status.OK).entity(healthy).build();
@@ -106,6 +111,7 @@ public class CustomersResource {
     @PUT
     @Path("/{Customer_id}")
     public Response putCustomer(@PathParam("Customer_id") String customer_id, Customer customer){
+        log.info("Put customer "+customer_id);
         customer = customersBean.putCustomer(customer_id,customer);
         if(customer == null) return Response.status(Response.Status.NOT_FOUND).build();
 
@@ -118,6 +124,7 @@ public class CustomersResource {
 
     @POST
     public Response createCustomer(Customer customer){
+        log.info("Create customer "+customer.getFirst_name()+" "+customer.getLast_name());
         customer = customersBean.createCustomer(customer);
         if(customer == null) return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
 
@@ -133,6 +140,7 @@ public class CustomersResource {
     @DELETE
     @Path("{Customer_id}")
     public Response deleteCustomer(@PathParam("Customer_id") String customer_id){
+        log.info("Delete customer "+customer_id);
         boolean deleted = customersBean.deleteCustomer(customer_id);
 
         if(deleted) return Response.status(Response.Status.GONE).build();
@@ -143,8 +151,10 @@ public class CustomersResource {
     @GET
     @Path("/filtered")
     public Response getCustomersFiltered(){
+        log.info("Customer Filtered ");
         List<Customer> customers = customersBean.getCustomersFilter(uriInfo);
         if(customers == null || customers.size() == 0) {
+            log.warn("Customer Filter not found.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }else{
             return Response.status(Response.Status.OK).entity(customers).build();
