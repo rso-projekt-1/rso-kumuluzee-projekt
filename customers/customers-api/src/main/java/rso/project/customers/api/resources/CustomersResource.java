@@ -161,6 +161,27 @@ public class CustomersResource {
         }
     }
 
+    @GET
+    @Path("/isPrime/{nth_number}")
+    public Response isPrime(@PathParam("nth_number") String nth_number){
+        log.info("Calculating is prime: "+nth_number);
+        long n = 2000000000L;
+        try {
+            n = Long.parseLong(nth_number);
+        }catch (Exception e){
+            log.error("User entered bad number "+nth_number);
+        }
+        boolean is_prime = true;
+        for(long i = 2; i < n; i++){
+            if(n%i == 0){
+               is_prime = false;
+            }
+        }
+
+        return Response.ok(is_prime).build();
+
+
+    }
 
     @GET
     @Path("/fibonacci/{nth_number}")

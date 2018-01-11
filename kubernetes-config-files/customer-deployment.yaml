@@ -13,6 +13,9 @@ spec:
       - image: vitjanz/rso-projekt:customers-api-rso
         imagePullPolicy: Always
         name: kubernetes-customer
+        resources:
+          requests:
+            cpu: 500m
         env:
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres-customer:5432/customer
