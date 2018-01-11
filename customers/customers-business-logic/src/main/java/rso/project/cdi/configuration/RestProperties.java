@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 @ConfigBundle("rest-properties")
 public class RestProperties {
 
-    @ConfigValue(value = "external-dependencies.order-service.enabled",watch = true)
+    @ConfigValue(watch = true)
     private boolean orderServiceEnabled;
 
     @ConfigValue(value = "external-dependencies.order-service.fakeHealthy",watch = true)

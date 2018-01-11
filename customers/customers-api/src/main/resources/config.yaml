@@ -55,3 +55,6 @@ kumuluzee:
                   </Configuration>'
 health-properties:
   customer-service-fake-healthy: true
+
+rest-properties:
+  order-service-enabled: true

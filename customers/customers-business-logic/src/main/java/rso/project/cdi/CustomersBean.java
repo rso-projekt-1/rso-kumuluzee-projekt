@@ -32,6 +32,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,8 +82,17 @@ public class CustomersBean {
     @CircuitBreaker(failureRatio = 0.4)
     @Fallback(fallbackMethod = "getOrdersFallback")
     @CommandKey("http-get-order")
-    @Timeout(value=500)
+    @Timeout(value=2, unit = ChronoUnit.SECONDS)
     public List<Order> getOrders(String customer_id){
+        if(!restProperties.isOrderServiceEnabled()){
+            System.out.println("Order service disabled");
+            Exception e = new Exception();
+            try {
+                throw e;
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
         if(basePath.isPresent()){
         try {
             String request_uri = basePath.get()+"/v1/orders?where=customerId:EQ:"+customer_id;
