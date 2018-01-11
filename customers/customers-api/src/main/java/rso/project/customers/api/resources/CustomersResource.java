@@ -161,5 +161,28 @@ public class CustomersResource {
         }
     }
 
+
+    @GET
+    @Path("/fibonacci/{nth_number}")
+    public Response calculateFibonacci(@PathParam("nth_number") String nth_number){
+        int nth = 0;
+        try {
+            nth = Integer.parseInt(nth_number);
+        }catch (Exception e){
+            log.error("User entered bad number");
+        }
+
+        int a = 1;
+        int b = 1;
+        for(int i = 2; i< nth; i++){
+            int c = a+b;
+            a = b;
+            b = c;
+        }
+        return Response.ok(b).build();
+
+
+    }
+
 }
 
