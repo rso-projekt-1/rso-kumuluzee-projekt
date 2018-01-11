@@ -1,7 +1,7 @@
 package rso.project.orders.api.resources;
 
 import rso.project.Order;
-import rso.project.orders.cdi.OrdersBean;
+import rso.project.orders.cdi.CartsBean;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -22,11 +22,11 @@ public class OrdersResource {
     private UriInfo uriInfo;
 
     @Inject
-    private OrdersBean ordersBean;
+    private CartsBean cartsBean;
 
     @GET
     public Response getOrders(){
-        List<Order> orders = ordersBean.getOrders(uriInfo);
+        List<Order> orders = cartsBean.getOrders(uriInfo);
         return Response.ok(orders).build();
     }
 
@@ -35,7 +35,7 @@ public class OrdersResource {
     @Path("/{orderId}")
     public Response getOrder(@PathParam("orderId") String orderId) {
 
-        Order order = ordersBean.getOrder(orderId);
+        Order order = cartsBean.getOrder(orderId);
 
         if (order == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -50,7 +50,7 @@ public class OrdersResource {
         if (order.getTitle() == null || order.getTitle().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         } else {
-            order = ordersBean.createOrder(order);
+            order = cartsBean.createOrder(order);
         }
 
         if (order.getId() != null) {
@@ -64,7 +64,7 @@ public class OrdersResource {
     @Path("{orderId}")
     public Response putOrder(@PathParam("orderId") String orderId, Order order) {
 
-        order = ordersBean.putOrder(orderId, order);
+        order = cartsBean.putOrder(orderId, order);
 
         if (order == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -80,7 +80,7 @@ public class OrdersResource {
     @Path("{orderId}")
     public Response deleteCustomer(@PathParam("orderId") String orderId) {
 
-        boolean deleted = ordersBean.deleteOrder(orderId);
+        boolean deleted = cartsBean.deleteOrder(orderId);
 
         if (deleted) {
             return Response.status(Response.Status.GONE).build();

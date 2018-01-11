@@ -34,6 +34,9 @@ public class Customer{
     @Transient
     private List<Order> orders;
 
+    @Transient
+    private List<Cart> carts;
+
     //getters,setters
 
     public String getId(){
@@ -81,5 +84,13 @@ public class Customer{
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> orders) {
+        this.carts = carts;
     }
 }

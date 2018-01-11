@@ -1,0 +1,30 @@
+kumuluzee:
+  name: cart-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://*:8083
+    http:
+      port: 8083
+  datasources:
+    - jndi-name: jdbc/CartsDS
+      connection-url: jdbc:postgresql://172.17.0.1:5434/cart
+      username: postgres
+      password: postgres
+      max-pool-size: 20
+  config:
+      etcd:
+        hosts: http://192.168.99.100:2379
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/CartsDS
+  discovery:
+      etcd:
+        hosts: http://localhost:2379
+      ttl: 20
+      ping-interval: 15

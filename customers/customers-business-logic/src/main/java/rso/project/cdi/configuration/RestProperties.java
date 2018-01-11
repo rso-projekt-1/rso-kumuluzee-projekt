@@ -26,4 +26,23 @@ public class RestProperties {
     public void setOrderServiceEnabled(boolean orderServiceEnabled){
         this.orderServiceEnabled = orderServiceEnabled;
     }
+
+
+    @ConfigValue(value = "external-dependencies.cart-service.enabled",watch = true)
+    private boolean cartServiceEnabled;
+
+    @ConfigValue(value = "external-dependencies.cart-service.fakeHealthy",watch = true)
+    private boolean cartServiceFakeHealthy;
+
+    public boolean isCartServiceFakeHealthy(){ return cartServiceFakeHealthy; }
+    public void setCartServiceFakeHealthy(boolean cartServiceFakeHealthy){
+        this.cartServiceFakeHealthy = cartServiceFakeHealthy;
+    }
+
+    public boolean isCartServiceEnabled(){
+        return cartServiceEnabled;
+    }
+    public void setCartServiceEnabled(boolean cartServiceEnabled){
+        this.cartServiceEnabled = cartServiceEnabled;
+    }
 }

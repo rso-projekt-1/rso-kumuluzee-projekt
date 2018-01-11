@@ -1,0 +1,18 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cart
+    ports:
+      - "5434:5432"
+  order-service:
+    #image: vitjanz/rso-projekt:customers-api-rso
+    image: carts-api-test
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/cart
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres

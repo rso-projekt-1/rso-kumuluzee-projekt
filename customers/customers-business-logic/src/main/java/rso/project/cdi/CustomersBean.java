@@ -43,6 +43,9 @@ public class CustomersBean {
 
     @Inject
     @DiscoverService(value="order-service",environment = "dev", version = "*")
+
+    @Inject
+    @DiscoverService(value="cart-service",environment = "dev", version = "*")
     private Optional<String> basePath;
 
     @Inject
@@ -99,6 +102,37 @@ public class CustomersBean {
         }
         }else{
             System.out.println("Order-service not discovered.");
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Cart> getCarts(String customer_id){
+        if(basePath.isPresent()){
+            try {
+                String request_uri = basePath.get()+"/v1/carts?where=customerId:EQ:"+customer_id;
+                //request_uri = basePath.get()+"/v1/carts/";
+
+                System.out.println(request_uri);
+                HttpGet request = new HttpGet(request_uri);
+                HttpResponse response = httpClient.execute(request);
+
+                int status = response.getStatusLine().getStatusCode();
+                System.out.println("Status "+status);
+                if(status >= 200 && status < 300){
+                    HttpEntity entity = response.getEntity();
+
+                    if(entity != null) return getObjects(EntityUtils.toString(entity));
+                }
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                System.out.println("Error: "+basePath.get());
+            } catch (IOException e) {
+                String msg = e.getClass().getName()+ " occured: "+e.getMessage();
+                System.out.println(msg);
+                throw new InternalServerErrorException(msg);
+            }
+        }else{
+            System.out.println("Cart-service not discovered.");
         }
         return new ArrayList<>();
     }
