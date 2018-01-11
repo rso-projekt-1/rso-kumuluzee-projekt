@@ -10,6 +10,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -61,7 +62,12 @@ public class CustomersBean {
 
     @PostConstruct
     private void init() {
-        httpClient = HttpClientBuilder.create().build();
+        HttpClientBuilder tmp = HttpClientBuilder.create();
+        RequestConfig.Builder requestBuilder = RequestConfig.custom();
+        requestBuilder = requestBuilder.setConnectTimeout(2000);
+        requestBuilder = requestBuilder.setConnectionRequestTimeout(2000);
+        tmp.setDefaultRequestConfig(requestBuilder.build());
+        httpClient = tmp.build();
         objectMapper = new ObjectMapper();
 
         //basePath = "http://localhost:8081/v1/";
