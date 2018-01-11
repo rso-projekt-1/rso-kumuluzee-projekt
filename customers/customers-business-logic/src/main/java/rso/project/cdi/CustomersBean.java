@@ -80,7 +80,7 @@ public class CustomersBean {
 
     @CircuitBreaker(requestVolumeThreshold = 2)
     @Fallback(fallbackMethod = "getOrdersFallback")
-    @Timeout
+    @Timeout(value=2, unit=ChronoUnit.SECONDS)
     public List<Order> getOrders(String customer_id){
         if(basePath.isPresent()){
         try {
