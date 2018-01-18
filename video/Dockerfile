@@ -4,7 +4,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-ADD ./customers-api/target/video-api-1.0-SNAPSHOT.jar /app
+ADD ./video-api/target/video-api-1.0-SNAPSHOT.jar /app
 
 EXPOSE 8081
 
