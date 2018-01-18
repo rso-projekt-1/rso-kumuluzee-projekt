@@ -12,6 +12,7 @@
         <module>orders</module>
         <module>demo</module>
         <module>video</module>
+        <module>playlists</module>
     </modules>
     <dependencies>
         <dependency>
