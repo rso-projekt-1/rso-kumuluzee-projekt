@@ -15,6 +15,7 @@
         <module>playlists</module>
         <module>friends</module>
         <module>recommender</module>
+        <module>rating</module>
     </modules>
     <dependencies>
         <dependency>

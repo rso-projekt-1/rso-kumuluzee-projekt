@@ -8,6 +8,7 @@ script:
   - docker build -t $DOCKER_USERNAME/rso-projekt:video-api-rso ./video/
   - docker build -t $DOCKER_USERNAME/rso-projekt:playlists-api-rso ./playlists/
   - docker build -t $DOCKER_USERNAME/rso-projekt:recommender-api-rso ./recommender/
+  - docker build -t $DOCKER_USERNAME/rso-projekt:rating-api-rso ./rating/
   - docker build -t $DOCKER_USERNAME/rso-projekt:demo-rso ./demo/
 
 
@@ -20,6 +21,7 @@ after_success:
   - docker push $DOCKER_USERNAME/rso-projekt:video-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:playlists-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:recommender-api-rso
+  - docker push $DOCKER_USERNAME/rso-projekt:rating-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:demo-rso
 
 

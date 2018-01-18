@@ -1,19 +1,21 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: recommender-deployment
+  name: rating-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: recommender
+        app: rating
     spec:
       containers:
-      - image: vitjanz/rso-projekt:recommender-api-rso
+      - image: vitjanz/rso-projekt:ratings-api-rso
         imagePullPolicy: Always
-        name: kubernetes-recommender
+        name: kubernetes-rating
         env:
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-rating:5432/rating
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: private-coreos
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
@@ -22,7 +24,8 @@ spec:
             value: http://etcd:2379
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://192.168.29.247:30052
-
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-rating:5432/rating
         ports:
         - containerPort: 8081
           name: server
