@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: playlists-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: playlists
+    spec:
+      containers:
+      - image: vitjanz/rso-projekt:playlists-api-rso
+        imagePullPolicy: Always
+        name: kubernetes-playlists
+        resources:
+          requests:
+            cpu: 500m
+        env:
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-playlists:5432/playlists
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.246:30052
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-playlists:5432/playlists
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP

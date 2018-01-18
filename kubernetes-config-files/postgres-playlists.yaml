@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-playlists-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-playlists
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres-playlists
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_DB
+            value: playlists
+
+        ports:
+        - containerPort: 5432
+          name: server
+          protocol: TCP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-playlists
+spec:
+  type: NodePort
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres-playlists
