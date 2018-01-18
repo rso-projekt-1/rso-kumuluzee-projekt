@@ -18,7 +18,7 @@ spec:
             cpu: 500m
         env:
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres-playlists:5432/playlists
+            value: jdbc:postgresql://postgres-playlists:5432/playlist
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: private-coreos
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
@@ -28,7 +28,7 @@ spec:
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://192.168.29.246:30052
           - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
-            value: jdbc:postgresql://postgres-playlists:5432/playlists
+            value: jdbc:postgresql://postgres-playlists:5432/playlist
         ports:
         - containerPort: 8081
           name: server
