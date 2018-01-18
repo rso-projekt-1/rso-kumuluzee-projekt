@@ -54,6 +54,8 @@ public class CustomersBean {
     @DiscoverService(value="order-service",environment = "dev", version = "*")
     private Optional<String> basePath;
 
+
+
     @Inject
     private RestProperties restProperties;
 

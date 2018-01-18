@@ -1,6 +1,7 @@
 package rso.project;
 
 import org.eclipse.persistence.annotations.UuidGenerator;
+import rso.project.video.persistence.Video;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,6 +28,9 @@ import java.util.Date;
         @Column(name = "customer_id")
         private String customerId;
 
+
+        @Transient
+        private Video[] films;
 
         public String getId() {
             return id;

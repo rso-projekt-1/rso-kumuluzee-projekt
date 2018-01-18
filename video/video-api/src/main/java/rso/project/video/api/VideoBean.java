@@ -1,74 +1,70 @@
-package rso.project.orders.cdi;
+package rso.project.video.api;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
-import rso.project.Order;
+import rso.project.video.persistence.Video;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.ext.ExceptionMapper;
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
-public class OrdersBean {
-    @PersistenceContext(unitName = "orders-jpa")
+public class VideoBean {
+    @PersistenceContext(unitName = "video-jpa")
     private EntityManager em;
 
 
-
-    public List<Order> getOrders(UriInfo uriInfo){
+    public List<Video> getVideos(UriInfo uriInfo){
         System.out.println(uriInfo.getRequestUri().toString());
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0).build();
-        return JPAUtils.queryEntities(em, Order.class, queryParameters);
+        return JPAUtils.queryEntities(em, Video.class, queryParameters);
     }
 
-    public Order getOrder(String orderId){
-        Order order = em.find(Order.class,orderId);
-        if(order==null)throw new NotFoundException();
-        return order;
+    public Video getVideo(String videoId){
+        Video video = em.find(Video.class,videoId);
+        if(video==null)throw new NotFoundException();
+        return video;
     }
 
-    public Order createOrder(Order order){
+    public Video createVideo(Video video){
         try {
             beginTx();
-            em.persist(order);
+            em.persist(video);
             commitTx();
 
         }catch (Exception err){
             rollbackTx();
             return null;
         }
-        return order;
+        return video;
     }
 
-    public Order putOrder(String orderId, Order order){
-        Order o = em.find(Order.class,orderId);
+    public Video putVideo(String videoId, Video video){
+        Video o = em.find(Video.class,videoId);
         if(o == null) return null;
 
         try {
             beginTx();
-            order.setId(orderId);
-            order = em.merge(order);
+            video.setId(videoId);
+            video = em.merge(video);
             commitTx();
         }catch (Exception err){
             rollbackTx();
             return null;
         }
-        return order;
+        return video;
     }
 
-    public boolean deleteOrder(String orderId){
-        Order order = em.find(Order.class,orderId);
-        if(order == null) return false;
+    public boolean deleteVideo(String videoId){
+        Video video = em.find(Video.class,videoId);
+        if(video == null) return false;
 
         try {
             beginTx();
-            em.remove(order);
+            em.remove(video);
             commitTx();
         }catch (Exception err){
             rollbackTx();
