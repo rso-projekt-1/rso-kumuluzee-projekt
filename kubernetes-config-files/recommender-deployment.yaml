@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: recommender-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: recommender
+    spec:
+      containers:
+      - image: vitjanz/rso-projekt:recommenders-api-rso
+        imagePullPolicy: Always
+        name: kubernetes-recommender
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.247:30052
+
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP

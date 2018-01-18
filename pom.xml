@@ -13,6 +13,8 @@
         <module>demo</module>
         <module>video</module>
         <module>playlists</module>
+        <module>friends</module>
+        <module>recommender</module>
     </modules>
     <dependencies>
         <dependency>
