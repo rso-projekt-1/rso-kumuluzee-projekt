@@ -3,14 +3,13 @@ kumuluzee:
   env:
     name: dev
   version: 1.0.0
-  #debug: true
   server:
     base-url: http://localhost:8081
     http:
       port: 8081
   datasources:
     - jndi-name: jdbc/VideoDS
-      connection-url: jdbc:postgresql://172.17.0.1:5432/customer
+      connection-url: jdbc:postgresql://172.17.0.1:5432/video
       username: postgres
       password: postgres
       max-pool-size: 20
@@ -20,13 +19,5 @@ kumuluzee:
   discovery:
     etcd:
       hosts: http://localhost:2379
-  health:
-    servlet:
-      mapping: /health
-      enabled: true
-    checks:
-      data-source-health-check:
-        jndi-name: jdbc/VideoDS
-        username: postgres
-        password: postgres
+
 
