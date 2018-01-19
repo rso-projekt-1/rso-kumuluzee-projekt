@@ -15,7 +15,7 @@ spec:
         name: kubernetes-friends
         env:
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres-friends:5432/friend
+            value: jdbc:postgresql://postgres-friends:5432/friends
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: private-coreos
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
@@ -25,7 +25,7 @@ spec:
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://192.168.29.247:30052
           - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
-            value: jdbc:postgresql://postgres-friends:5432/friend
+            value: jdbc:postgresql://postgres-friends:5432/friends
         ports:
         - containerPort: 8081
           name: server
