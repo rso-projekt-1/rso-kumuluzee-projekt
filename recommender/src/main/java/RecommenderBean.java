@@ -63,9 +63,13 @@ public class RecommenderBean {
                     if (status >= 200 && status < 300) {
                         HttpEntity entity = response.getEntity();
                         if(entity != null) {
+                            System.out.println("Entity not null");
                             List<Video> vids = getObjects(EntityUtils.toString(entity));
                             int ind = (int) (Math.random ()* vids.size());
                             return vids.get(ind);
+                        }else{
+                            System.out.println("Entity null");
+
                         }
                     }
                 } catch (ClientProtocolException e) {

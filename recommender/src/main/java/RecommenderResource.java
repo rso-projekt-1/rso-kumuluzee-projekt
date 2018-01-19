@@ -31,6 +31,7 @@ public class RecommenderResource {
         Video video = recommenderBean.recommendRandom();
         if(video==null){
             log.warn("Error getting recommended item.");
+            System.out.println("Error getting item.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(video).build();
