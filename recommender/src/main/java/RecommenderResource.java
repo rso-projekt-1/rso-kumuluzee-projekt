@@ -25,6 +25,12 @@ public class RecommenderResource {
     @Context
     private UriInfo uriInfo;
 
+    @GET
+    @Path("/test")
+    public Response getReccomendationTest(){
+        //Video video = recommenderBean.recommendRandom();
+        return Response.ok(12).build();
+    }
 
     @GET
     public Response getRecommendation(){
@@ -32,7 +38,7 @@ public class RecommenderResource {
         if(video==null){
             log.warn("Error getting recommended item.");
             System.out.println("Error getting item.");
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         return Response.ok(video).build();
     }

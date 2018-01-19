@@ -91,6 +91,15 @@ public class CustomersResource {
     }
 
     @GET
+    @Path("/orderless/{Customer_id}")
+    public Response getCustomerNoOrder(@PathParam("Customer_id") String customer_id){
+        Customer customer = customersBean.getCustomerNoOrders(customer_id);
+        if(customer == null) return Response.status(Response.Status.NOT_FOUND).build();
+
+        return Response.status(Response.Status.OK).entity(customer).build();
+    }
+
+    @GET
     @Path("/healthy")
     public Response getHealthy(){
         log.info("Get health property");

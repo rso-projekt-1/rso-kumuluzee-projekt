@@ -19,6 +19,7 @@ import rso.project.Customer;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,17 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
+@RequestScoped
 class SubscribeBean {
 
     @PersistenceContext(unitName = "subscribe-jpa")
     private EntityManager em;
-
-    private ObjectMapper objectMapper;
-
-    private HttpClient httpClient;
-
-    private Logger log = LogManager.getLogger(SubscribeBean.class.getName());
 
     @Inject
     private SubscribeBean subscribeBean;
@@ -49,6 +44,18 @@ class SubscribeBean {
     @Inject
     @DiscoverService(value="customer-service",environment = "dev", version = "*")
     private Optional<String> basePath;
+
+    private ObjectMapper objectMapper;
+
+    private HttpClient httpClient;
+
+    private Logger log = LogManager.getLogger(SubscribeBean.class.getName());
+
+
+
+
+
+
 
     @PostConstruct
     private void init() {
@@ -61,7 +68,7 @@ class SubscribeBean {
         objectMapper = new ObjectMapper();
     }
 
-    public List<Subscribe> getSubscribes(UriInfo uriInfo){
+    public List<Subscribe> getSubscribers(UriInfo uriInfo){
         System.out.println(uriInfo.getRequestUri().toString());
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0).build();
 
@@ -78,16 +85,16 @@ class SubscribeBean {
         if(subscribe==null)throw new NotFoundException();
         return subscribe;
     }
-    @CircuitBreaker(requestVolumeThreshold = 2)
-    @Fallback(fallbackMethod = "getSubscribersFallback")
-    @Timeout(value=2, unit= ChronoUnit.SECONDS)
+    //@CircuitBreaker(requestVolumeThreshold = 2)
+    //@Fallback(fallbackMethod = "getSubscribersFallback")
+    //@Timeout(value=2, unit= ChronoUnit.SECONDS)
     public List<Customer> getSubscribers(List<String> subscriber_ids){
 
         if(basePath.isPresent()){
             ArrayList<Customer> customers = new ArrayList<Customer>();
             for(String customer_id : subscriber_ids) {
                 try {
-                    String request_uri = basePath.get() + "/v1/customers/" + customer_id;
+                    String request_uri = basePath.get() + "/v1/customers/orderless/" + customer_id;
                     //request_uri = basePath.get()+"/v1/orders/";
 
                     System.out.println(request_uri);
@@ -96,9 +103,11 @@ class SubscribeBean {
 
                     int status = response.getStatusLine().getStatusCode();
                     log.info("Status " + status);
+                    System.out.println("Status"+status);
                     if (status >= 200 && status < 300) {
                         HttpEntity entity = response.getEntity();
                         if(entity != null) {
+                            System.out.println("entity not null");
                             Customer v = objectMapper.readValue(EntityUtils.toString(entity), objectMapper.getTypeFactory().constructType(Customer.class));
                             customers.add(v);
                         }
@@ -114,7 +123,7 @@ class SubscribeBean {
             }
             return customers;
         }else{
-            log.warn("Order-service not discovered.");
+            log.warn("Customer-service not discovered.");
         }
         return new ArrayList<>();
     }

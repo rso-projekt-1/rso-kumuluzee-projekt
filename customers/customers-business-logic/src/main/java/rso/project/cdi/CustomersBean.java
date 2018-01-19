@@ -79,6 +79,12 @@ public class CustomersBean {
         //basePath = "http://localhost:8081/v1/";
     }
 
+    public Customer getCustomerNoOrders(String customer_id){
+        Customer customer = em.find(Customer.class, customer_id);
+        if(customer == null) throw new NotFoundException();
+        return customer;
+    }
+
     public Customer getCustomer(String customer_id){
         Customer customer = em.find(Customer.class, customer_id);
         if(customer == null) throw new NotFoundException();

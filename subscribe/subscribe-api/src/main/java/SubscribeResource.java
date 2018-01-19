@@ -20,7 +20,7 @@ public class SubscribeResource {
 
     @GET
     public Response getSubscribes(){
-        List<Subscribe> subscribes = subscribeBean.getSubscribes(uriInfo);
+        List<Subscribe> subscribes = subscribeBean.getSubscribers(uriInfo);
         return Response.ok(subscribes).build();
     }
 
