@@ -13,10 +13,10 @@
         <module>demo</module>
         <module>video</module>
         <module>playlists</module>
-        <module>friends</module>
         <module>recommender</module>
         <module>rating</module>
         <module>friends</module>
+        <module>subscribe</module>
     </modules>
     <dependencies>
         <dependency>

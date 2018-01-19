@@ -10,6 +10,7 @@ script:
   - docker build -t $DOCKER_USERNAME/rso-projekt:recommender-api-rso ./recommender/
   - docker build -t $DOCKER_USERNAME/rso-projekt:rating-api-rso ./rating/
   - docker build -t $DOCKER_USERNAME/rso-projekt:friends-api-rso ./friends/
+  - docker build -t $DOCKER_USERNAME/rso-projekt:subscribe-api-rso ./subscribe/
   - docker build -t $DOCKER_USERNAME/rso-projekt:demo-rso ./demo/
 
 
@@ -24,6 +25,7 @@ after_success:
   - docker push $DOCKER_USERNAME/rso-projekt:recommender-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:rating-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:friends-api-rso
+  - docker push $DOCKER_USERNAME/rso-projekt:subscribe-api-rso
   - docker push $DOCKER_USERNAME/rso-projekt:demo-rso
 
 

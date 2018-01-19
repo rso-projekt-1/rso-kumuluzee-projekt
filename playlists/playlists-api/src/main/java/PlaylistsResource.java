@@ -11,7 +11,6 @@ import java.util.List;
 @Path("playlists")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-
 public class PlaylistsResource {
     @Context
     private UriInfo uriInfo;
@@ -70,6 +69,7 @@ public class PlaylistsResource {
                 return Response.status(Response.Status.NOT_MODIFIED).build();
         }
     }
+
 
     @DELETE
     @Path("{playlistId}")
