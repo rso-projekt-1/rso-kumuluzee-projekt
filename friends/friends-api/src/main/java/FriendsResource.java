@@ -39,4 +39,20 @@ public class FriendsResource {
         return Response.status(Response.Status.OK).entity(friend).build();
     }
 
+    @POST
+    public Response createFriend(Friend friends) {
+
+        if (friends.getCustomer_id() == null || friends.getCustomer_id().isEmpty()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else {
+            friends = friendsBean.createFriend(friends);
+        }
+
+        if (friends.getId() != null) {
+            return Response.status(Response.Status.CREATED).entity(friends).build();
+        } else {
+            return Response.status(Response.Status.CONFLICT).entity(friends).build();
+        }
+    }
+
 }
