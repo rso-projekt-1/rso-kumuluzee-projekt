@@ -3,6 +3,7 @@ import com.kumuluz.ee.logs.Logger;
 import rso.project.video.persistence.Video;
 import sun.rmi.runtime.Log;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
+@RequestScoped
 @Path("recommender")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
