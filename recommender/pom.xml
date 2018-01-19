@@ -41,6 +41,11 @@
 
 
         <dependency>
+            <groupId>com.kumuluz.ee.rest</groupId>
+            <artifactId>kumuluzee-rest-core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-jta-narayana</artifactId>
         </dependency>
@@ -78,10 +83,22 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+
         <dependency>
             <groupId>rso.project</groupId>
             <artifactId>video-persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>rso.project</groupId>
+            <artifactId>playlists-persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kumuluz.ee.logs</groupId>
+            <artifactId>kumuluzee-logs-log4j2</artifactId>
+            <version>${kumuluzee-logs.version}</version>
         </dependency>
         <!-- <dependency>
             <groupId>rso.project</groupId>
