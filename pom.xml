@@ -16,6 +16,7 @@
         <module>friends</module>
         <module>recommender</module>
         <module>rating</module>
+        <module>friends</module>
     </modules>
     <dependencies>
         <dependency>

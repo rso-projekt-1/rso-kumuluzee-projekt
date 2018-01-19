@@ -8,7 +8,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 @RequestScoped
-@Path("playlists")
+@Path("rating")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class RatingResource {
